@@ -81,13 +81,13 @@ void internalBoard(){
     }
 
    int revealEmptyCells(int row, int col){
-       queue<pairs<int, int>> cells;
+       queue<pair<int, int>> cells;
        int revealed;
        int nearby = MinesPresent(row, col);
        board[row][col] = '0' + nearby;
-       reveled++;
+       revealed++;
        if(nearby == 0){
-           cells.push(make_pair(row, col);
+           cells.push(make_pair(row, col));
        }
 
       while(!cells.empty()){
@@ -97,7 +97,7 @@ void internalBoard(){
           int currentcol = current.second;
           for(int i = currentrow - 1; i <= currentrow + 1; i++){
               for(int j = currentcol - 1; j <= currentcol + 1; j++){
-                  if(i >= o && i < rows && j >= 0 && j < cols){
+                  if(i >= 0 && i < rows && j >= 0 && j < cols){
                       if (board[i][j] == '-' && mines[i][j] == false){
                           int neighbourMines = MinesPresent(i, j);
                           board[i][j] = '0' + neighbourMines;
@@ -109,6 +109,7 @@ void internalBoard(){
                   }
               }
           }
+      }
           return revealed;
       }
    void RenderBoard(){
@@ -219,11 +220,18 @@ void internalBoard(){
             }
             else{
                 int nearby = MinesPresent(row, col);
+                if(nearby == 0){
+                    int newrevealed = revealEmptycells(row, col);
+                    moves = mpves + newrevealed;
+                }
+                else{
                     board[row][col] = '0' + nearby;
                     moves++;
                     cout << "Safe move!" << endl;
+                }
+                
                 if(moves == SafeCells){
-                    Board();
+                    RenderBoard();
                     cout << "Congratulations! YOU WON!" << endl;
                     gameOver = true;
                 }
@@ -242,7 +250,7 @@ int main() {
     cout << "Select level: ";
     cin >> difficulty;
     if(difficulty < 1 || difficulty > 3){
-        cout <<"Invalid Level, enter 1 for easy, 2 for medium, 3 for hard Levels! << endl;
+        cout <<"Invalid Level, enter 1 for easy, 2 for medium, 3 for hard Levels!" << endl;
             }
     MineSweeper Player(difficulty);
     Player.internalBoard();
