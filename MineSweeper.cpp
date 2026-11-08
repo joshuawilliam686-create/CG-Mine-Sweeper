@@ -221,8 +221,8 @@ void internalBoard(){
             else{
                 int nearby = MinesPresent(row, col);
                 if(nearby == 0){
-                    int newrevealed = revealEmptycells(row, col);
-                    moves = mpves + newrevealed;
+                    int newrevealed = revealEmptyCells(row, col);
+                    moves = moves + newrevealed;
                 }
                 else{
                     board[row][col] = '0' + nearby;
